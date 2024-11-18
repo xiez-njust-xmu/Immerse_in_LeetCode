@@ -2,9 +2,8 @@
 //
 
 #include <iostream>
-#include <vector>
-#include <algorithm>
-using namespace std;
+#include "Immerse_in_LeetCode.h"
+
 /*
 825. 适龄的朋友
 在社交媒体网站上有 n 个用户。给你一个整数数组 ages ，其中 ages[i] 是第 i 个用户的年龄。
@@ -18,8 +17,7 @@ ages[y] > 100 && ages[x] < 100
 
 注意，如果 x 向 y 发送一条好友请求，y 不必也向 x 发送一条好友请求。另外，用户不会向自己发送好友请求。
 
-返回在该社交媒体网站上产生的好友请求总数。
-*/
+返回在该社交媒体网站上产生的好友请求总数。*/
 class Solution825 {
 public:
 	int numFriendRequests(vector<int>& ages) {
@@ -58,9 +56,8 @@ public:
 
 每个单元格的  平均灰度 定义为：该单元格自身及其周围的 8 个单元格的平均值，结果需向下取整。（即，需要计算蓝色平滑器中 9 个单元格的平均值）。
 
-如果一个单元格周围存在单元格缺失的情况，则计算平均灰度时不考虑缺失的单元格（即，需要计算红色平滑器中 4 个单元格的平均值）。
-*/
-class Solution625 {
+如果一个单元格周围存在单元格缺失的情况，则计算平均灰度时不考虑缺失的单元格（即，需要计算红色平滑器中 4 个单元格的平均值）。*/
+class Solution661 {
 public:
     vector<vector<int>> imageSmoother(vector<vector<int>>& img) {
 		int m = img.size();
@@ -83,12 +80,46 @@ public:
 				int d = min(n - 1, j + 1);
 				//格子数量
                 int cnt = (c - a + 1) * (d - b + 1);
-				
+
                 int tot = sum[c + 1][d + 1] - sum[a][d + 1] - sum[c + 1][b] + sum[a][b];
                 ans[i][j] = tot / cnt;
             }
         }
 		return ans;
+    }
+};
+
+/*
+86. 分隔链表
+
+给你一个链表的头节点 head 和一个特定值 x ，请你对链表进行分隔，使得所有 小于 x 的节点都出现在 大于或等于 x 的节点之前。
+
+你应当 保留 两个分区中每个节点的初始相对位置。*/
+class Solution89 {
+public:
+    ListNode* partition(ListNode* head, int x) {
+        ListNode* small = new ListNode(0);
+        ListNode* smallHead = small;
+        ListNode* large = new ListNode(0);
+        ListNode* largeHead = large;
+
+		while(head!=nullptr)
+		{
+			if(head->val<x)
+			{
+				small->next = head;
+				small = small->next;
+			}
+			else
+			{
+				large->next = head;
+				large = large->next;
+			}
+			head = head->next;
+		}
+		large->next = nullptr;
+		small->next = largeHead->next;
+		return smallHead->next;
     }
 };
 
