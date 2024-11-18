@@ -179,6 +179,37 @@ public:
     }
 };
 
+/*
+102. 二叉树的层序遍历
+
+给你二叉树的根节点 root ，返回其节点值的 层序遍历 。 （即逐层地，从左到右访问所有节点）*/
+class Solution102 {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+		vector<vector<int>> ans;
+        if(!root)
+			return ans;
+		queue<TreeNode*> q;
+		q.push(root);
+		while(!q.empty())
+		{
+			int currentLevelSize = q.size();
+			ans.push_back(vector <int> ());
+			for(int i=1;i<=currentLevelSize;i++)
+			{
+				auto now_node = q.front();
+				q.pop();
+				ans.back().push_back(now_node->val);
+				if(now_node->left)
+					q.push(now_node->left);
+				if(now_node->right)
+					q.push(now_node->right);
+			}
+		}
+		return ans;
+    }
+};
+
 int main()
 {
 	Solution90 leetcode90;
