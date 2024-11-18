@@ -1,8 +1,8 @@
 ﻿// Immerse_in_LeetCode.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
 
-#include <iostream>
-#include "Immerse_in_LeetCode.h"
+
+#include "Immerse_in_LeetCode.hpp"
 
 /*
 825. 适龄的朋友
@@ -123,12 +123,42 @@ public:
     }
 };
 
+class Solution90 {
+public:
+    vector<vector<int>> ans;
+    vector<int> temp;
+    set <vector<int>> mySet;
+    //myVector.assign(mySet.begin(), mySet.end());
+    void backtracking(vector<int>& nums,int num_index)
+    {
+        if(num_index >= nums.size())
+            return;
+        for(int i=num_index;i<nums.size();i++)
+        {
+            temp.push_back(nums[i]);
+            mySet.insert(temp);
+            backtracking(nums,i+1);
+            temp.pop_back();
+        }
+    }
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        backtracking(nums,0);
+        ans.assign(mySet.begin(), mySet.end());
+        ans.push_back(temp);
+        return ans;
+    }
+};
+
+
+
+
 int main()
 {
-	Solution825 leetcode825;
-	vector<int> test{ 20,30,100,110,120 };
-	cout << leetcode825.numFriendRequests(test);
-  
+	Solution90 leetcode90;
+	vector<int> test{4,4,4,1,4};
+	auto s = leetcode90.subsetsWithDup(test);
+	PrintVecofVec(s);
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
