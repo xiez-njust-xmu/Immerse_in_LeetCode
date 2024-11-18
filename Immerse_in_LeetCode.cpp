@@ -123,6 +123,10 @@ public:
     }
 };
 
+/*
+90. 子集 II
+给你一个整数数组 nums ，其中可能包含重复元素，请你返回该数组所有可能的 子集（幂集）。
+解集 不能 包含重复的子集。返回的解集中，子集可以按 任意顺序 排列。*/
 class Solution90 {
 public:
     vector<vector<int>> ans;
@@ -150,8 +154,30 @@ public:
     }
 };
 
-
-
+/*
+92. 反转链表 II
+给你单链表的头指针 head 和两个整数 left 和 right ，其中 left <= right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。
+ */
+class Solution92{
+public:
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        ListNode * dummynode = new ListNode(0);
+		dummynode->next = head;
+		ListNode* pre = dummynode;
+		for(int i=0;i<left-1;i++)
+			pre = pre->next;
+		ListNode* cur = pre->next;
+		ListNode* next_node;
+		for(int i = 0;i<right-left;i++)
+		{
+			next_node = cur->next;
+			cur->next = next_node->next;
+			next_node->next = pre->next;
+			pre->next = next_node;
+		}
+		return dummynode->next;
+    }
+};
 
 int main()
 {
