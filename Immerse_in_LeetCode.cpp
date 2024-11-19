@@ -210,12 +210,74 @@ public:
     }
 };
 
+/*
+3243. 新增道路查询后的最短距离 I
+
+给你一个整数 n 和一个二维整数数组 queries。
+
+有 n 个城市，编号从 0 到 n - 1。初始时，每个城市 i 都有一条单向道路通往城市 i + 1（ 0 <= i < n - 1）。
+
+queries[i] = [ui, vi] 表示新建一条从城市 ui 到城市 vi 的单向道路。每次查询后，你需要找到从城市 0 到城市 n - 1 的最短路径的长度。
+
+返回一个数组 answer，对于范围 [0, queries.length - 1] 中的每个 i，answer[i] 是处理完前 i + 1 个查询后，从城市 0 到城市 n - 1 的最短路径的长度*/
+class Solution3243 {
+public:
+	const int inf = 0x3f3f3f3f;
+    vector<int> shortestDistanceAfterQueries(int n, vector<vector<int>>& queries) {
+        vector<vector<int> >grid(n);
+		for(int i=0;i<n-1;i++)
+			grid[i].push_back(i+1);
+		vector<int> ans;
+		int *dis = new int[n];
+		int *vis = new int[n];
+		//onepath表示一条路径
+		for(auto& onepath : queries)
+		{
+			grid[onepath[0]].push_back(onepath[1]);
+			memset(dis,inf,sizeof(int)*n);
+			memset(vis,0,sizeof(int)*n);
+			dis[0] = 0;
+			priority_queue<int> pq;
+			pq.push(0);
+			int now = 0;
+			int new_dis = 0;
+			while(!pq.empty())
+			{
+				now = pq.top();
+				pq.pop();
+				/* if (vis[now])
+            		continue;
+        		vis[now] = 1; */
+				for(int i=0;i<grid[now].size();i++)
+				{
+					/* if(vis[grid[now][i]])
+						continue; */
+					new_dis = dis[now] + 1;
+					if(new_dis < dis[grid[now][i]])
+					{
+						dis[grid[now][i]] = new_dis;
+						pq.push(grid[now][i]);
+					}
+				}
+				for(int i=0;i<n;i++)
+					cout<<dis[i]<<" ";
+				cout<<endl;
+			}
+			cout<<"---------------"<<endl;
+			ans.emplace_back(dis[n-1]);
+		}
+		return ans;
+    }
+};
+
 int main()
 {
-	Solution90 leetcode90;
-	vector<int> test{4,4,4,1,4};
-	auto s = leetcode90.subsetsWithDup(test);
-	PrintVecofVec(s);
+	Solution3243 s;
+	string str = "[[0,3],[0,2]]";
+	auto temp1 = s2vv(str);
+	auto temp2 = s.shortestDistanceAfterQueries(4,temp1);
+	Printv(temp2);
+	return 0;
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
