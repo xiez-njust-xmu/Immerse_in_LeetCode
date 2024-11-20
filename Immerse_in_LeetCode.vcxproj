@@ -129,6 +129,9 @@
   <ItemGroup>
     <ClCompile Include="Immerse_in_LeetCode.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Immerse_in_LeetCode.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

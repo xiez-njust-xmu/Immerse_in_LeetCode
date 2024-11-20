@@ -244,6 +244,34 @@ public:
     }
 };
 
+/*107. 二叉树的层序遍历 II
+给你二叉树的根节点 root ，返回其节点值 自底向上的层序遍历 。 （即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历）*/
+class Solution107 {
+public:
+	vector<vector<int>> levelOrderBottom(TreeNode* root) {
+		vector<vector<int>> ans;
+		if (!root)
+			return ans;
+		queue<TreeNode*> q;
+		q.push(root);
+		while (!q.empty()) {
+			int currentLevelSize = q.size();
+			ans.push_back(vector<int>());
+			for (int i = 1; i <= currentLevelSize; i++) {
+				auto now_node = q.front();
+				q.pop();
+				ans.back().push_back(now_node->val);
+				if (now_node->left)
+					q.push(now_node->left);
+				if (now_node->right)
+					q.push(now_node->right);
+			}
+		}
+		reverse(ans.begin(), ans.end());
+		return ans;
+	}
+};
+
 /*
 3243. 新增道路查询后的最短距离 I
 
@@ -293,11 +321,7 @@ public:
 						pq.push(grid[now][i]);
 					}
 				}
-				for(int i=0;i<n;i++)
-					cout<<dis[i]<<" ";
-				cout<<endl;
 			}
-			cout<<"---------------"<<endl;
 			ans.emplace_back(dis[n-1]);
 		}
 		return ans;
