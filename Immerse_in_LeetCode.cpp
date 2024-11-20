@@ -209,6 +209,40 @@ public:
 		return ans;
     }
 };
+/*
+103. 二叉树的锯齿形层序遍历
+给你二叉树的根节点 root ，返回其节点值的 锯齿形层序遍历 。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。*/
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> ans;
+        if(!root)
+			return ans;
+		queue<TreeNode*> q;
+		q.push(root);
+		bool ordernow = false;
+		while(!q.empty())
+		{
+			int currentLevelSize = q.size();
+			ans.push_back(vector <int> ());
+			for(int i=1;i<=currentLevelSize;i++)
+			{
+				auto now_node = q.front();
+				q.pop();
+				if(ordernow)
+					ans.back().push_back(now_node->val);
+				else
+					ans.back().insert(ans.back().begin(),now_node->val);
+				if(now_node->left)
+					q.push(now_node->left);
+				if(now_node->right)
+					q.push(now_node->right);
+			}
+			ordernow =!ordernow;
+		}
+		return ans;
+    }
+};
 
 /*
 3243. 新增道路查询后的最短距离 I
