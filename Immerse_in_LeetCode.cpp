@@ -237,6 +237,51 @@ public:
 	}
 };
 
+/*112. 路径总和
+给你二叉树的根节点 root 和一个表示目标和的整数 targetSum 。判断该树中是否存在 根节点到叶子节点 的路径，这条路径上所有节点值相加等于目标和 targetSum 。如果存在，返回 true ；否则，返回 false 。
+
+叶子节点 是指没有子节点的节点*/
+class Solution {
+public:
+	/*bfs*/
+    bool hasPathSum1(TreeNode* root, int targetSum) {
+        if(root==nullptr)
+			return false;
+		queue< pair<TreeNode*,int> > qt;
+		qt.push({root,root->val});
+		while(!qt.empty())
+		{
+			TreeNode* now_node = qt.front().first;
+			int now_sum = qt.front().second;
+			qt.pop();
+			if(now_node->left==nullptr&&now_node->right==nullptr)
+			{
+				if(now_sum == targetSum)
+					return true;
+				continue;
+			}
+			if(now_node->left!=nullptr)
+			{
+				qt.push({now_node->left,now_sum+now_node->left->val});
+			}
+			if(now_node->right!=nullptr)
+			{
+				qt.push({now_node->right,now_sum+now_node->right->val});
+			}
+		}
+		return false;
+    }
+	/*递归*/
+	bool hasPathSum2(TreeNode* root, int targetSum) {
+        if(root==nullptr)
+			return false;
+		if(root->left==nullptr&&root->right==nullptr)
+			return targetSum == root->val;
+		return hasPathSum2(root->left,targetSum-root->val)||hasPathSum2(root->right,targetSum-root->val);
+    }
+};
+
+
 /*
 661. 图片平滑器
 图像平滑器 是大小为 3 x 3 的过滤器，用于对图像的每个单元格平滑处理，平滑处理后单元格的值为该单元格的平均灰度。
