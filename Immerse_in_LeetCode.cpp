@@ -127,7 +127,7 @@ public:
 /*
 103. 二叉树的锯齿形层序遍历
 给你二叉树的根节点 root ，返回其节点值的 锯齿形层序遍历 。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。*/
-class Solution {
+class Solution103 {
 public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
         vector<vector<int>> ans;
@@ -241,7 +241,7 @@ public:
 给你二叉树的根节点 root 和一个表示目标和的整数 targetSum 。判断该树中是否存在 根节点到叶子节点 的路径，这条路径上所有节点值相加等于目标和 targetSum 。如果存在，返回 true ；否则，返回 false 。
 
 叶子节点 是指没有子节点的节点*/
-class Solution {
+class Solution112 {
 public:
 	/*bfs*/
     bool hasPathSum1(TreeNode* root, int targetSum) {
@@ -280,7 +280,73 @@ public:
 		return hasPathSum2(root->left,targetSum-root->val)||hasPathSum2(root->right,targetSum-root->val);
     }
 };
+/*113. 路径总和 II
+给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。
 
+叶子节点 是指没有子节点的节点。*/
+
+class Solution113 {
+public:
+	vector<vector<int> > ans;
+	unordered_map<TreeNode*,TreeNode*> parent_node;
+	void add_path(TreeNode* node)
+	{
+		vector<int>temp;
+		while(node!=nullptr)
+		{
+			temp.push_back(node->val);
+			node = parent_node[node];
+		}
+		reverse(temp.begin(),temp.end());
+		ans.push_back(temp);
+	}
+	vector<int> onepath;
+	void dfs(TreeNode* root, int targetSum)
+	{
+		if(root==nullptr)
+			return;
+		onepath.push_back(root->val);
+		targetSum -= root->val;
+		if(root->left==nullptr&&root->right==nullptr)
+		{
+			if(0 == targetSum)
+				ans.push_back(onepath);
+		}
+		dfs(root->left,targetSum);
+		dfs(root->right,targetSum);
+		onepath.pop_back();
+	}
+    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+		if(root==nullptr)
+			return ans;
+		/* dfs(root,targetSum);
+			return ans; */
+		queue< pair<TreeNode*,int> > qt;
+		qt.push({root,root->val});
+		while(!qt.empty())
+		{
+			TreeNode* now_node = qt.front().first;
+			int now_sum = qt.front().second;
+			qt.pop();
+			if(now_node->left==nullptr&&now_node->right==nullptr)
+			{
+				if(now_sum == targetSum)
+					add_path(now_node);
+			}
+			if(now_node->left!=nullptr)
+            {
+                parent_node[now_node->left] = now_node;
+                qt.push({now_node->left,now_sum+now_node->left->val});
+            }	
+			if(now_node->right!=nullptr)
+            {
+                 parent_node[now_node->right] = now_node;
+                 qt.push({now_node->right,now_sum+now_node->right->val});
+            }
+		}
+		return ans;
+    }
+};
 
 /*
 661. 图片平滑器
