@@ -386,7 +386,7 @@ public:
 		return ans;
 	}
 };
-
+   
 /*
 825. 适龄的朋友
 在社交媒体网站上有 n 个用户。给你一个整数数组 ages ，其中 ages[i] 是第 i 个用户的年龄。
@@ -487,6 +487,47 @@ public:
 			ans.emplace_back(dis[n-1]);
 		}
 		return ans;
+    }
+};
+
+/*
+3233. 统计不是特殊数字的数字数量
+给你两个 正整数 l 和 r。对于任何数字 x，x 的所有正因数（除了 x 本身）被称为 x 的 真因数。
+
+如果一个数字恰好仅有两个 真因数，则称该数字为 特殊数字。例如：
+
+数字 4 是 特殊数字，因为它的真因数为 1 和 2。
+数字 6 不是 特殊数字，因为它的真因数为 1、2 和 3。
+返回区间 [l, r] 内 不是 特殊数字 的数字数量。*/
+class Solution3233 {
+public:
+	bool *is_prime = nullptr;
+	void sieve(int n)
+	{
+		is_prime = new bool[n+1];    // 标记范围内所有数
+		int p = 0;
+		for(int i=0;i<=n;i++)
+			is_prime[i]=true;       // 所有数先标记为true
+		is_prime[0] = is_prime[1] = false;   // 把数字0，1标记为质数
+		for(int i=2;i<=n;i++)
+		{
+			if(is_prime[i])         // 如果这个数没有被标记为false
+			{
+				for(int j=i*i;j<=n;j+=i)   // 这里没有优化时的写法是for(int j=2*i; j<=n; j++)。
+					is_prime[j]=false;
+			}
+		}
+	}
+    int nonSpecialCount(int l, int r) {
+        int sum_num = r-l+1;
+		sieve(sqrt(r+1));
+		/*取上界函数*/
+		for(int i = ceil(sqrt(l));i <= sqrt(r);i++)
+		{
+			if(is_prime[i])
+				sum_num--;
+		}
+		return sum_num;
     }
 };
 
