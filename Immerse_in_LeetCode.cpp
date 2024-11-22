@@ -378,6 +378,45 @@ public:
 		}
     }
 };
+
+/*
+116. 填充每个节点的下一个右侧节点指针
+
+给定一个 完美二叉树 ，其所有叶子节点都在同一层，每个父节点都有两个子节点。二叉树定义如下：
+
+填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。
+
+初始状态下，所有 next 指针都被设置为 NULL。*/
+class Solution116 {
+public:
+    Node* connect(Node* root) {
+        if(root == nullptr)
+			return nullptr;
+		queue<Node* > q;
+		q.push(root);
+		while(!q.empty())
+		{
+			int current_level_size = q.size();
+			for(int i = 0;i<current_level_size;i++)
+			{
+				Node* now_node = q.front();
+				q.pop();
+				 
+				if(i<current_level_size-1)
+					now_node->next = q.front();
+				else
+					now_node->next = nullptr;
+				
+				if(now_node->left!=nullptr)
+					q.push(now_node->left);
+				if(now_node->right!=nullptr)
+					q.push(now_node->right);
+			}
+		}
+		return root;
+    }
+};
+
 /*
 661. 图片平滑器
 图像平滑器 是大小为 3 x 3 的过滤器，用于对图像的每个单元格平滑处理，平滑处理后单元格的值为该单元格的平均灰度。
