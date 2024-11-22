@@ -349,6 +349,36 @@ public:
 };
 
 /*
+114. 二叉树展开为链表
+
+给你二叉树的根结点 root ，请你将它展开为一个单链表：
+
+展开后的单链表应该同样使用 TreeNode ，其中 right 子指针指向链表中下一个结点，而左子指针始终为 null 。
+展开后的单链表应该与二叉树 先序遍历 顺序相同。*/
+class Solution114 {
+public:
+	void preorderTraversal(TreeNode* root,vector<TreeNode*>& l)
+	{
+		if(root!=nullptr)
+		{
+			l.push_back(root);
+			preorderTraversal(root->left,l);
+			preorderTraversal(root->right,l);
+		}
+	}
+    void flatten(TreeNode* root) {
+        vector<TreeNode* > l;
+		preorderTraversal(root,l);
+		for(int i=1;i<l.size();i++)
+		{
+			TreeNode* pre = l.at(i-1);
+			TreeNode* cur = l.at(i);
+			pre->left = nullptr;
+			pre->right = cur;
+		}
+    }
+};
+/*
 661. 图片平滑器
 图像平滑器 是大小为 3 x 3 的过滤器，用于对图像的每个单元格平滑处理，平滑处理后单元格的值为该单元格的平均灰度。
 
