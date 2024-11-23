@@ -422,7 +422,37 @@ public:
 		return root;
     }
 };
+/*118. 杨辉三角
+给定一个非负整数 numRows，生成「杨辉三角」的前 numRows 行。
 
+在「杨辉三角」中，每个数是它左上方和右上方的数的和。*/
+class Solution118 {
+public:
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> ans;
+		for(int i=1;i<=numRows;i++)
+		{
+			vector<int> temp;
+			for(int j=0;j<i;j++)
+			{
+				if(j==0)
+				{
+					temp.push_back(1);
+					continue;
+				}
+				if(j==i-1)
+				{
+					temp.push_back(1);
+					continue;
+				}
+				if(j>0&&j<i-1)
+					temp.push_back(ans.back()[j]+ans.back()[j-1]);
+			}
+			ans.push_back(temp);
+		}
+		return ans;	
+    }
+};
 /*
 661. 图片平滑器
 图像平滑器 是大小为 3 x 3 的过滤器，用于对图像的每个单元格平滑处理，平滑处理后单元格的值为该单元格的平均灰度。
@@ -642,10 +672,8 @@ public:
 };
 int main()
 {
-	Solution3243 s;
-	string str = "[[0,3],[0,2]]";
-	auto temp1 = s2vv(str);
-	auto temp2 = s.shortestDistanceAfterQueries(4,temp1);
+	Solution118 s;
+	auto temp2 = s.generate(5);
 	Printv(temp2);
 	return 0;
 }
