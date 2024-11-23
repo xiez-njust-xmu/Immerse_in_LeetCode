@@ -288,7 +288,7 @@ public:
 class Solution113 {
 public:
 	vector<vector<int> > ans;
-	unordered_map<TreeNode*,TreeNode*> parent_node;
+	unordered_map<TreeNode*,TreeNode* > parent_node;
 	void add_path(TreeNode* node)
 	{
 		vector<int>temp;
@@ -452,6 +452,38 @@ public:
 		}
 		return ans;	
     }
+};
+/*119. 杨辉三角 II
+给定一个非负索引 rowIndex，返回「杨辉三角」的第 rowIndex 行。
+
+在「杨辉三角」中，每个数是它左上方和右上方的数的和。*/
+class Solution {
+public:
+	vector<int> getRow(int rowIndex) {
+		vector<int> temp;
+		vector<int> Upper;
+		for (int i = 1; i <= rowIndex+1; i++)
+		{
+			for (int j = 0; j < i; j++)
+			{
+				if (j == 0)
+				{
+					temp.push_back(1);
+					continue;
+				}
+				if (j == i - 1)
+				{
+					temp.push_back(1);
+					continue;
+				}
+				if (j > 0 && j < i - 1)
+					temp.push_back(Upper[j] + Upper[j - 1]);
+			}
+			Upper = temp;
+			temp.clear();
+		}
+		return Upper;
+	}
 };
 /*
 661. 图片平滑器
