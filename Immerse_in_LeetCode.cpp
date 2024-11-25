@@ -523,7 +523,48 @@ public:
 		return ans;
 	}
 };
-   
+/*743. 网络延迟时间
+有 n 个网络节点，标记为 1 到 n。
+
+给你一个列表 times，表示信号经过 有向 边的传递时间。 times[i] = (ui, vi, wi)，其中 ui 是源节点，vi 是目标节点， wi 是一个信号从源节点传递到目标节点的时间。
+
+现在，从某个节点 K 发出一个信号。需要多久才能使所有节点都收到信号？如果不能使所有节点收到信号，返回 -1 。*/
+class Solution743 {
+public:
+    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+        const int inf = INT_MAX / 2;
+        vector<vector<pair<int, int>>> grid(n);
+        for (auto &t : times) {
+            int x = t[0] - 1, y = t[1] - 1;
+            grid[x].emplace_back(y, t[2]);
+        }
+		vector<int> dist(n, inf);
+        dist[k - 1] = 0;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> q;
+		q.emplace(k-1,0);
+		while(!q.empty())
+		{
+			auto now_node = q.top();
+			q.pop();
+			int to = now_node.first;
+			int use_time = now_node.second;
+			if(dist[to]<use_time)
+				continue;
+			for(auto & e: grid[to])
+			{
+				int y = e.first;
+				int d = dist[to]+e.second;
+				if(d<dist[y])
+				{
+					dist[y] = d;
+					q.emplace(y,d);
+				}
+			}
+		}
+		auto ans = *max_element(dist.begin(),dist.end());
+		return ans == inf ? -1: ans;
+    }
+};
 /*
 825. 适龄的朋友
 在社交媒体网站上有 n 个用户。给你一个整数数组 ages ，其中 ages[i] 是第 i 个用户的年龄。
