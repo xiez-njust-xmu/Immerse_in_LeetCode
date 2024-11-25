@@ -504,6 +504,37 @@ public:
 		return ans;
     }
 };
+
+/*128. 最长连续序列
+给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。
+
+请你设计并实现时间复杂度为 O(n) 的算法解决此问题。*/
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set <int> st;
+		for(int i=0;i<nums.size();i++)
+			st.insert(nums[i]);
+		int ans = 0;
+		int currentnum = 0;
+		for(auto & onenum:st)
+		{
+			int nowcount = 0;
+			if(!st.count(onenum-1))
+			{
+				currentnum = onenum;
+				nowcount = 1;
+			}
+			while(st.count(currentnum + 1))
+			{	
+				currentnum++;
+				nowcount++;
+			}
+			ans = max(ans,nowcount);
+		}
+		return ans;
+    }
+};
 /*
 661. 图片平滑器
 图像平滑器 是大小为 3 x 3 的过滤器，用于对图像的每个单元格平滑处理，平滑处理后单元格的值为该单元格的平均灰度。
