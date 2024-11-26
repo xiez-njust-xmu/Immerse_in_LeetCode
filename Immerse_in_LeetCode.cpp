@@ -661,6 +661,31 @@ public:
 	}
 };
 
+
+/*3206. 交替组 I
+给你一个整数数组 colors ，它表示一个由红色和蓝色瓷砖组成的环，第 i 块瓷砖的颜色为 colors[i] ：
+
+colors[i] == 0 表示第 i 块瓷砖的颜色是 红色 。
+colors[i] == 1 表示第 i 块瓷砖的颜色是 蓝色 。
+环中连续 3 块瓷砖的颜色如果是 交替 颜色（也就是说中间瓷砖的颜色与它 左边 和 右边 的颜色都不同），那么它被称为一个 交替 组。
+
+请你返回 交替 组的数目。
+
+注意 ，由于 colors 表示一个 环 ，第一块 瓷砖和 最后一块 瓷砖是相邻的。*/
+class Solution3206 {
+public:
+	int numberOfAlternatingGroups(vector<int>& colors) {
+		int ans = 0;
+		int n = colors.size();
+		for (int i = 0; i < n; i++)
+		{
+			if (colors[i] != colors[(i + 1) % n] && colors[(i + 2) % n] != colors[(i + 1) % n])
+				ans++;
+		}
+		return ans;
+	}
+};
+
 /*3238. 求出胜利玩家的数目
 给你一个整数 n ，表示在一个游戏中的玩家数目。同时给你一个二维整数数组 pick ，其中 pick[i] = [xi, yi] 表示玩家 xi 获得了一个颜色为 yi 的球。
 
