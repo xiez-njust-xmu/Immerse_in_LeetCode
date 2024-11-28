@@ -535,6 +535,42 @@ public:
 		return ans;
     }
 };
+
+/*129. 求根节点到叶节点数字之和
+给你一个二叉树的根节点 root ，树中每个节点都存放有一个 0 到 9 之间的数字。
+每条从根节点到叶节点的路径都代表一个数字：
+
+例如，从根节点到叶节点的路径 1 -> 2 -> 3 表示数字 123 。
+计算从根节点到叶节点生成的 所有数字之和 。
+
+叶节点 是指没有子节点的节点。*/
+class Solution {
+public:
+	vector<int> onepath;
+	int ans = 0;
+	void dfs(TreeNode* root)
+	{
+		if(root==nullptr)
+			return;
+		onepath.push_back(root->val);
+		if(root->left==nullptr&&root->right==nullptr)
+		{
+			for(int i=0;i<onepath.size();i++)
+			{
+				ans += (pow(10,onepath.size()-i-1)*onepath[i]);
+			}
+		}
+		dfs(root->left);
+		dfs(root->right);
+		onepath.pop_back();
+	}
+	
+    int sumNumbers(TreeNode* root) {
+        dfs(root);
+		return ans;
+    }
+};
+
 /*
 661. 图片平滑器
 图像平滑器 是大小为 3 x 3 的过滤器，用于对图像的每个单元格平滑处理，平滑处理后单元格的值为该单元格的平均灰度。
