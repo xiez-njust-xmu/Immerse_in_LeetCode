@@ -509,7 +509,7 @@ public:
 给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。
 
 请你设计并实现时间复杂度为 O(n) 的算法解决此问题。*/
-class Solution {
+class Solution128 {
 public:
     int longestConsecutive(vector<int>& nums) {
         unordered_set <int> st;
@@ -544,7 +544,7 @@ public:
 计算从根节点到叶节点生成的 所有数字之和 。
 
 叶节点 是指没有子节点的节点。*/
-class Solution {
+class Solution129 {
 public:
 	vector<int> onepath;
 	int ans = 0;
@@ -568,6 +568,40 @@ public:
     int sumNumbers(TreeNode* root) {
         dfs(root);
 		return ans;
+    }
+};
+
+/*134. 加油站
+在一条环路上有 n 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
+
+你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。你从其中的一个加油站出发，开始时油箱为空。
+
+给定两个整数数组 gas 和 cost ，如果你可以按顺序绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1 。如果存在解，则 保证 它是 唯一 的。*/
+class Solution134 {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        size_t n = gas.size();
+		int i = 0;
+		while (i<n)
+		{
+			int sum_gas = 0;
+			int sum_cost = 0;
+			int cnt = 0;
+			while(cnt < n)
+			{
+				int now = (i+cnt)%n;
+				sum_cost += cost[now];
+				sum_gas += gas[now];
+				if(sum_cost>sum_gas)
+					break;
+				++cnt;
+			}
+			if(cnt == n)
+				return i;
+			else
+				i = i+cnt+1;
+		}
+		return -1;
     }
 };
 
