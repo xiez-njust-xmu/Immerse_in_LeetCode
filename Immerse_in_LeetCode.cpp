@@ -807,7 +807,27 @@ public:
 		return ans;
 	}
 };
+/*3232. 判断是否可以赢得数字游戏
+给你一个 正整数 数组 nums。
 
+Alice 和 Bob 正在玩游戏。在游戏中，Alice 可以从 nums 中选择所有个位数 或 所有两位数，剩余的数字归 Bob 所有。如果 Alice 所选数字之和 严格大于 Bob 的数字之和，则 Alice 获胜。
+
+如果 Alice 能赢得这场游戏，返回 true；否则，返回 false。*/
+class Solution3232 {
+public:
+	bool canAliceWin(vector<int>& nums) {
+		int ans = 0;
+		int ans10 = 0;
+		for (int num : nums)
+		{
+			if (num < 10)
+				ans += num;
+			else
+				ans10 += num;
+		}
+		return !(ans == ans10);
+	}
+};
 /*3238. 求出胜利玩家的数目
 给你一个整数 n ，表示在一个游戏中的玩家数目。同时给你一个二维整数数组 pick ，其中 pick[i] = [xi, yi] 表示玩家 xi 获得了一个颜色为 yi 的球。
 
