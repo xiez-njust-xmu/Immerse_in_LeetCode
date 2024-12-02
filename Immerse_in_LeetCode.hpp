@@ -35,7 +35,7 @@ public:
     Node* left;
     Node* right;
     Node* next;
-
+    
     Node() : val(0), left(NULL), right(NULL), next(NULL) {}
 
     Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
