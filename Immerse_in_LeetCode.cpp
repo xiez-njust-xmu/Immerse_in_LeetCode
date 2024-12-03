@@ -649,6 +649,68 @@ public:
     }
 };
 
+/*143. 重排链表
+给定一个单链表 L 的头节点 head ，单链表 L 表示为：
+
+L0 → L1 → … → Ln - 1 → Ln
+请将其重新排列后变为：
+
+L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。*/
+class Solution143{
+public:
+	ListNode* findmiddle(ListNode* head)
+	{
+		ListNode* fast = head;
+		ListNode* slow = head;
+		/*快慢指针的顺序必须是这样！*/
+		while (fast->next != nullptr &&fast->next->next != nullptr)
+		{
+			fast = fast->next->next;
+			slow = slow->next;
+		}
+		return slow;
+	}
+	ListNode* ReverseList(ListNode* head)/*迭代反转*/
+	{
+		ListNode* pre = nullptr;
+		ListNode* cur = head;
+		ListNode* nex = nullptr;
+		while (cur != nullptr)
+		{
+			nex = cur->next;
+			cur->next = pre;
+			pre = cur;
+			cur = nex;
+		}
+		return pre;
+	}
+	void MergeList(ListNode* l1, ListNode* l2)
+	{
+		ListNode* temp1;
+		ListNode* temp2;
+		while (l1 != nullptr && l2 != nullptr) {
+			temp1 = l1->next;
+			temp2 = l2->next;
+
+			l1->next = l2;
+			l1 = temp1;
+
+			l2->next = l1;
+			l2 = temp2;
+		}
+	}
+	void reorderList(ListNode* head) {
+		if (head == nullptr || head->next == nullptr)
+			return;
+		ListNode* middle = findmiddle(head);
+		ListNode* l1 = head;
+		ListNode* l2 = middle->next;
+		middle->next = nullptr;
+		l2 = ReverseList(l2);
+		MergeList(l1, l2);
+	}
+};
 /*661. 图片平滑器
 图像平滑器 是大小为 3 x 3 的过滤器，用于对图像的每个单元格平滑处理，平滑处理后单元格的值为该单元格的平均灰度。
 
