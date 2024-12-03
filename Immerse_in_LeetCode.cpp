@@ -1018,6 +1018,17 @@ public:
 		return nowy*n+nowx;
     }
 };
+
+/*3274. 检查棋盘方格颜色是否相同
+给你两个字符串 coordinate1 和 coordinate2，代表 8 x 8 国际象棋棋盘上的两个方格的坐标。*/
+class Solution3274 {
+public:
+	bool checkTwoChessboards(string coordinate1, string coordinate2) {
+		int c1 = coordinate1[0] - 'a' + coordinate1[1] - '1';
+		int c2 = coordinate2[0] - 'a' + coordinate2[1] - '1';
+		return (c1 % 2 == c2 % 2);
+	}
+};
 int main()
 {
 	Solution118 s;
