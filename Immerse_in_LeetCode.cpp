@@ -711,6 +711,25 @@ public:
 		MergeList(l1, l2);
 	}
 };
+
+/*144. 二叉树的前序遍历
+给你二叉树的根节点 root ，返回它节点值的 前序 遍历。*/
+class Solution144 {
+public:
+	void preorder(TreeNode* root, vector<int>& res) {
+		if (root == nullptr) {
+			return;
+		}
+		res.push_back(root->val);
+		preorder(root->left, res);
+		preorder(root->right, res);
+	}
+	vector<int> preorderTraversal(TreeNode* root) {
+		vector<int> ans;
+		preorder(root, ans);
+		return ans;
+	}
+};
 /*661. 图片平滑器
 图像平滑器 是大小为 3 x 3 的过滤器，用于对图像的每个单元格平滑处理，平滑处理后单元格的值为该单元格的平均灰度。
 
