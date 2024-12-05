@@ -750,6 +750,65 @@ public:
 	}
 };
 
+/*150. 逆波兰表达式求值
+给你一个字符串数组 tokens ，表示一个根据 逆波兰表示法 表示的算术表达式。
+
+请你计算该表达式。返回一个表示表达式值的整数。
+
+注意：
+
+有效的算符为 '+'、'-'、'*' 和 '/' 。
+每个操作数（运算对象）都可以是一个整数或者另一个表达式。
+两个整数之间的除法总是 向零截断 。
+表达式中不含除零运算。
+输入是一个根据逆波兰表示法表示的算术表达式。
+答案及所有中间计算结果可以用 32 位 整数表示。*/
+class Solution150 {
+public:
+    int evalRPN(vector<string>& tokens) {
+        int n = tokens.size();
+		stack<int> st;
+		for(int i=0;i<n;i++)
+		{
+			string str = tokens[i];
+			//if(str[0]>'0'&&str[0]<'9') 没有考虑是负数的情况
+			if(str!="+"&&str!="-"&&str!="/"&&str!="*")
+			{
+				st.push(str[0]-'0');
+			}
+			else
+			{
+				int opnum1 = st.top();
+				st.pop();
+				int opnum2 = st.top();
+				st.pop();
+				int opnumans = 0;
+				switch (str[0])
+				{
+				case '+':
+					opnumans = opnum1+opnum2;
+					st.push(opnumans);
+					break;
+				case '-':
+					opnumans = opnum2-opnum1;
+					st.push(opnumans);
+					break;
+				case '*':
+					opnumans = opnum2*opnum1;
+					st.push(opnumans);
+					break;
+				case '/':
+					opnumans = opnum2/opnum1;
+					st.push(opnumans);
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		return st.top();
+    }
+};
 /*661. 图片平滑器
 图像平滑器 是大小为 3 x 3 的过滤器，用于对图像的每个单元格平滑处理，平滑处理后单元格的值为该单元格的平均灰度。
 
