@@ -749,6 +749,45 @@ public:
 		return ans;
 	}
 };
+/*147. 对链表进行插入排序
+给定单个链表的头 head ，使用 插入排序 对链表进行排序，并返回 排序后链表的头 。
+
+插入排序 算法的步骤:
+
+插入排序是迭代的，每次只移动一个元素，直到所有元素可以形成一个有序的输出列表。
+每次迭代中，插入排序只从输入数据中移除一个待排序的元素，找到它在序列中适当的位置，并将其插入。
+重复直到所有输入数据插入完为止。*/
+class Solution147 {
+public:
+	ListNode* insertionSortList(ListNode* head) {
+		if (head == nullptr)
+			return nullptr;
+		ListNode* dummyHead = new ListNode(0);
+		dummyHead->next = head;
+		ListNode* lastSorted = head;
+		ListNode* curr = head->next;
+		while (curr != nullptr)
+		{
+			if (lastSorted->val <= curr->val)
+			{
+				lastSorted = lastSorted->next;
+			}
+			else
+			{
+				ListNode* pre = dummyHead;
+				while (pre->next->val <= curr->val)
+				{
+					pre = pre->next;
+				}
+				lastSorted->next = curr->next;
+				curr->next = pre->next;
+				pre->next = curr;
+			}
+			curr = lastSorted->next;
+		}
+		return dummyHead->next;
+	}
+};
 /*661. 图片平滑器
 图像平滑器 是大小为 3 x 3 的过滤器，用于对图像的每个单元格平滑处理，平滑处理后单元格的值为该单元格的平均灰度。
 
@@ -874,6 +913,49 @@ public:
 	}
 };
 
+/*999. 可以被一步捕获的棋子数
+给定一个 8 x 8 的棋盘，只有一个 白色的车，用字符 'R' 表示。棋盘上还可能存在白色的象 'B' 以及黑色的卒 'p'。空方块用字符 '.' 表示。
+
+车可以按水平或竖直方向（上，下，左，右）移动任意个方格直到它遇到另一个棋子或棋盘的边界。如果它能够在一次移动中移动到棋子的方格，则能够 吃掉 棋子。
+
+注意：车不能穿过其它棋子，比如象和卒。这意味着如果有其它棋子挡住了路径，车就不能够吃掉棋子。
+
+返回白车 攻击 范围内 兵的数量。*/
+class Solution999 {
+public:
+	int numRookCaptures(vector<vector<char>>& board) {
+		int ans = 0;
+		int RI = 0;
+		int RJ = 0;
+		int dx[4] = { 0, 1, 0, -1 };
+		int dy[4] = { 1, 0, -1, 0 };
+		for (int i = 0; i < 8; ++i) {
+			for (int j = 0; j < 8; ++j) {
+				if (board[i][j] == 'R') {
+					RI = i;
+					RJ = j;
+					break;
+				}
+			}
+		}
+		for (int i = 0; i < 4; i++)
+		{
+			for (int step = 0;; step++)
+			{
+				int nowx = RI + step * dx[i];
+				int nowy = RJ + step * dy[i];
+				if (nowx < 0 || nowx>7 || nowy < 0 || nowy>7 || board[nowx][nowy] == 'B')
+					break;
+				if (board[nowx][nowy] == 'p')
+				{
+					ans++;
+					break;
+				}
+			}
+		}
+		return ans;
+	}
+};
 
 /*3206. 交替组 I
 给你一个整数数组 colors ，它表示一个由红色和蓝色瓷砖组成的环，第 i 块瓷砖的颜色为 colors[i] ：
