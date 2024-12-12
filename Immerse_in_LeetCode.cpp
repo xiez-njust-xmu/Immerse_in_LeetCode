@@ -749,6 +749,49 @@ public:
 		return ans;
 	}
 };
+/*151. 反转字符串中的单词
+给你一个字符串 s ，请你反转字符串中 单词 的顺序。
+
+单词 是由非空格字符组成的字符串。s 中使用至少一个空格将字符串中的 单词 分隔开。
+
+返回 单词 顺序颠倒且 单词 之间用单个空格连接的结果字符串。
+
+注意：输入字符串 s中可能会存在前导空格、尾随空格或者单词间的多个空格。返回的结果字符串中，单词间应当仅用单个空格分隔，且不包含任何额外的空格。*/
+class Solution151 {
+public:
+    string reverseWords(string s) {
+        int left = 0;
+		int right = s.size()-1;
+		while(left <= right&&s[left]==' ')
+			left++;
+		while(left <= right&&s[right]==' ')
+			right--;
+		deque<string> d;
+		string now_word;
+		while(left<=right)
+		{
+			char c = s[left];
+			if(now_word.size()&&c==' ')
+			{
+				d.push_front(std::move(now_word));
+				now_word="";
+			}
+			else if(c!=' ')
+				now_word+=c;
+			++left;
+		}
+		d.push_front(std::move(now_word));
+		string ans;
+		while(!d.empty())
+		{
+			ans+=d.front();
+			d.pop_front();
+			if(!d.empty())
+				ans+=' ';
+		}
+		return ans;
+    }
+};
 /*661. 图片平滑器
 图像平滑器 是大小为 3 x 3 的过滤器，用于对图像的每个单元格平滑处理，平滑处理后单元格的值为该单元格的平均灰度。
 
@@ -874,11 +917,20 @@ public:
 	}
 };
 
+/*
+3001. 捕获黑皇后需要的最少移动次数
+	现有一个下标从 1 开始的 8 x 8 棋盘，上面有 3 枚棋子。
+	给你 6 个整数 a 、b 、c 、d 、e 和 f ，其中：
+	(a, b) 表示白色车的位置。
+	(c, d) 表示白色象的位置。
+	(e, f) 表示黑皇后的位置。
+假定你只能移动白色棋子，返回捕获黑皇后所需的最少移动次数。
+请注意：
+	车可以向垂直或水平方向移动任意数量的格子，但不能跳过其他棋子。
+	象可以沿对角线方向移动任意数量的格子，但不能跳过其他棋子。
+	如果车或象能移向皇后所在的格子，则认为它们可以捕获皇后。
+	皇后不能移动。*/
 
-车可以向垂直或水平方向移动任意数量的格子，但不能跳过其他棋子。
-象可以沿对角线方向移动任意数量的格子，但不能跳过其他棋子。
-如果车或象能移向皇后所在的格子，则认为它们可以捕获皇后。
-皇后不能移动。*/
 class Solution3001 {
 public:
     int minMovesToCaptureTheQueen(int a, int b, int c, int d, int e, int f) {
@@ -1148,10 +1200,10 @@ public:
 };
 int main()
 {
-	Solution118 s;
-	auto temp2 = s.generate(5);
-	Printv(temp2);
-	return 0;
+	Solution151 s;
+	auto a = "the sky is blue";
+	auto x = s.reverseWords(a);
+	cout<<x;
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
