@@ -818,6 +818,34 @@ public:
 		return ans;
     }
 };
+
+/*153. 寻找旋转排序数组中的最小值
+
+已知一个长度为 n 的数组，预先按照升序排列，经由 1 到 n 次 旋转 后，得到输入数组。例如，原数组 nums = [0,1,2,4,5,6,7] 在变化后可能得到：
+若旋转 4 次，则可以得到 [4,5,6,7,0,1,2]
+若旋转 7 次，则可以得到 [0,1,2,4,5,6,7]
+注意，数组 [a[0], a[1], a[2], ..., a[n-1]] 旋转一次 的结果为数组 [a[n-1], a[0], a[1], a[2], ..., a[n-2]] 。
+
+给你一个元素值 互不相同 的数组 nums ，它原来是一个升序排列的数组，并按上述情形进行了多次旋转。请你找出并返回数组中的 最小元素 。
+
+你必须设计一个时间复杂度为 O(log n) 的算法解决此问题*/
+class Solution153 {
+public:
+    int findMin(vector<int>& nums) {
+        int left= 0;
+		int right = nums.size()-1;
+		while(left<right)
+		{
+			int mid = (left+right)/2;
+			if(nums[mid]>nums[right])
+				left = mid+1;
+			else
+				right = mid;
+		}
+		return nums[right];
+    }
+};
+
 /*661. 图片平滑器
 图像平滑器 是大小为 3 x 3 的过滤器，用于对图像的每个单元格平滑处理，平滑处理后单元格的值为该单元格的平均灰度。
 
@@ -854,6 +882,39 @@ public:
 		}
 		return ans;
 	}
+};
+
+/*155. 最小栈
+设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。
+
+实现 MinStack 类:
+
+MinStack() 初始化堆栈对象。
+void push(int val) 将元素val推入堆栈。
+void pop() 删除堆栈顶部的元素。
+int top() 获取堆栈顶部的元素。
+int getMin() 获取堆栈中的最小元素。*/
+class MinStack {
+public:
+	vector <int > ans;
+    MinStack() {
+        
+    }
+    void push(int val) {
+	   ans.push_back(val);
+    }
+    
+    void pop() {
+		ans.pop_back();
+    }
+    
+    int top() {
+		return ans[ans.size()-1];
+    }
+    
+    int getMin() {
+        return *min_element(ans.begin(),ans.end());
+    }
 };
 /*743. 网络延迟时间
 有 n 个网络节点，标记为 1 到 n。
