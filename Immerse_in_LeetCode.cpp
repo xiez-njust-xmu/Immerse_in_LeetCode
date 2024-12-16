@@ -792,6 +792,32 @@ public:
 		return ans;
     }
 };
+
+/*152. 乘积最大子数组
+给你一个整数数组 nums ，请你找出数组中乘积最大的非空连续 
+子数组
+（该子数组中至少包含一个数字），并返回该子数组所对应的乘积。
+
+测试用例的答案是一个 32-位 整数。*/
+class Solution152 {
+public:
+    int maxProduct(vector<int>& nums) {
+        long minf = nums[0];
+		long maxf = nums[0];
+		long ans = nums[0];
+		for(int i=1;i<nums.size();i++)
+		{
+			long mx = maxf;
+			long mn = minf;
+			maxf = max(mx*nums[i],max((long)nums[i],mn*nums[i]));
+			minf = min(mn*nums[i],min((long)nums[i],nums[i]*mx));
+			if(minf<INT_MIN)
+				minf = nums[i];
+			ans = max(ans,maxf);
+		}
+		return ans;
+    }
+};
 /*661. 图片平滑器
 图像平滑器 是大小为 3 x 3 的过滤器，用于对图像的每个单元格平滑处理，平滑处理后单元格的值为该单元格的平均灰度。
 
