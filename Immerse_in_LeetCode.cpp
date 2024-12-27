@@ -1031,6 +1031,34 @@ public:
 			return 2;
     }
 };
+
+/*3159. 查询数组中元素的出现位置
+
+给你一个整数数组 nums ，一个整数数组 queries 和一个整数 x 。
+
+对于每个查询 queries[i] ，你需要找到 nums 中第 queries[i] 个 x 的位置，并返回它的下标。如果数组中 x 的出现次数少于 queries[i] ，该查询的答案为 -1 。
+
+请你返回一个整数数组 answer ，包含所有查询的答案。*/
+class Solution3159 {
+public:
+    vector<int> occurrencesOfElement(vector<int>& nums, vector<int>& queries, int x) {
+		vector<int> ans;
+		vector<int> arr;
+		for(int i=0;i<nums.size();i++)
+		{
+			if(nums[i] == x)
+				arr.push_back(i);
+		}
+		for(int i=0;i<queries.size();i++)
+		{
+			if(arr.size()<queries[i])
+				ans.push_back(-1);
+			else
+				ans.push_back(arr[queries[i]-1]);
+		}
+		return ans;
+    }
+};
 /*3206. 交替组 I
 给你一个整数数组 colors ，它表示一个由红色和蓝色瓷砖组成的环，第 i 块瓷砖的颜色为 colors[i] ：
 
