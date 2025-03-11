@@ -88,8 +88,8 @@ vector<T> s2v(const string& s) {
 }
 
 template<typename T = int>
-vector<vector<T>> s2vv(const string& s) {
-  vector<vector<T>> res;
+vector<vector<T> > s2vv(const string& s) {
+  vector<vector<T> > res;
 
   // assume string should start with "["
   size_t pos = 1;

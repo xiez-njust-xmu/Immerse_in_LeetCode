@@ -316,7 +316,7 @@ public:
 		dfs(root->right,targetSum);
 		onepath.pop_back();
 	}
-    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+    vector<vector<int> > pathSum(TreeNode* root, int targetSum) {
 		if(root==nullptr)
 			return ans;
 		/* dfs(root,targetSum);
@@ -1003,6 +1003,44 @@ public:
 		return ans;
 	}
 };
+/*2012. 数组美丽值求和
+中等
+
+给你一个下标从 0 开始的整数数组 nums 。对于每个下标 i（1 <= i <= nums.length - 2），nums[i] 的 美丽值 等于：
+
+2，对于所有 0 <= j < i 且 i < k <= nums.length - 1 ，满足 nums[j] < nums[i] < nums[k]
+1，如果满足 nums[i - 1] < nums[i] < nums[i + 1] ，且不满足前面的条件
+0，如果上述条件全部不满足
+返回符合 1 <= i <= nums.length - 2 的所有 nums[i] 的 美丽值的总和 。
+*/
+class Solution2012 {
+public:
+	int sumOfBeauties(vector<int>& nums) {
+		int n = nums.size();
+		vector <int> state(n);
+		int premax = nums[0];
+		for(int i=1;i<n-1;i++)
+		{
+			if(nums[i]>premax)
+			{
+				state[i] = 1;
+				premax = nums[i];
+			}
+		}
+		int premin = nums[n-1];
+		int ans = 0;
+		for(int i=n-2;i>=1;i--)
+		{
+			if(state[i]&&nums[i]<premin)
+				ans+=2;
+			else if(nums[i-1]<nums[i]&&nums[i]<nums[i+1])
+				ans++;
+			
+			premin = min(premin,nums[i]);
+		}
+		return ans;
+	}
+};
 
 /*
 3001. 捕获黑皇后需要的最少移动次数
@@ -1335,6 +1373,7 @@ public:
 };
 int main()
 {
+	
 	Solution151 s;
 	auto a = "the sky is blue";
 	auto x = s.reverseWords(a);
